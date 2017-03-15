@@ -6,6 +6,6 @@ package com.company;
 public class CardTester {
 
     public static void main(String[] args) {
-
+        
     }
 }
