@@ -8,11 +8,20 @@ public class Deck {
     private List<Card> cards;
     private int size;
     public Deck(String[] ranks, String[] suits, int[] values) {
-		List cards = new ArrayList(size);
-        cards.add(ranks);
-        cards.add(suits);
-        cards.add(values);
+		ArrayList<Card> list = new ArrayList();
+        for(int i = 0; i<suits.length; i++) {
+            for (int j = 0; j < ranks.length; j++){
+                Card cool = new Card (ranks[j], suits[i], values[j]);
+                deck.add(cool);
+            }
+
+        }
+        deck = list;
+        deckSize = deck.size();
     }
+
+    private ArrayList<Card> deck;
+    private int deckSize;
 
     public boolean isEmpty() {
 		if(cards.size()>0){
@@ -27,18 +36,19 @@ public class Deck {
     }
 
     public void shuffle() {
+        for (int i = deck.size() - 1; i > 0; i--) {
+            int red = (int) (Math.random() * (i + 1));
+            Card cool = deck.get(red);
+            deck.set(i, cool);
+            deck.set(red, deck.get(i));
 
+        }
     }
 
     public Card deal() {
 		return cards.get(size);
     }
 
-    /**
-     * Generates and returns a string representation of this deck.
-     * @return a string representation of this deck.
-     */
-    @Override
     public String toString() {
         String rtn = "size = " + size + "\nUndealt cards: \n";
 
