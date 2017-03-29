@@ -11,6 +11,7 @@ public class CardTester {
         Card c1 = new Card("King", "hearts", 13);
         Card c2 = new Card("Queen", "spades", 12);
         Card c3 = new Card("jack", "hearts", 11);
+    }
 
     public static Deck deal(){
         Deck ret;
