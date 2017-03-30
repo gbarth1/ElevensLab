@@ -2,41 +2,12 @@ package com.company;
 import java.util.List;
 import java.util.ArrayList;
 /**
- * Created by gb647 on 3/29/17.
+ * Created by gb647 on 3/30/17.
  */
-public class ElevensBoard {
-    /**
-     * The size (number of cards) on the board.
-     */
-    private static final int BOARD_SIZE = 9;
+public abstract class Board {
 
-    /**
-     * The ranks of the cards for this game to be sent to the deck.
-     */
-    private static final String[] RANKS =
-            {"ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"};
-
-    /**
-     * The suits of the cards for this game to be sent to the deck.
-     */
-    private static final String[] SUITS =
-            {"spades", "hearts", "diamonds", "clubs"};
-
-    /**
-     * The values of the cards for this game to be sent to the deck.
-     */
-    private static final int[] POINT_VALUES =
-            {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0, 0};
-
-
-    /**
-     * The cards on this board.
-     */
     private Card[] cards;
 
-    /**
-     * The deck of cards being used to play the current game.
-     */
     private Deck deck;
 
     /**
@@ -44,13 +15,17 @@ public class ElevensBoard {
      */
     private static final boolean I_AM_DEBUGGING = false;
 
-
     /**
-     * Creates a new <code>ElevensBoard</code> instance.
+     * Creates a new <code>Board</code> instance.
+     * @param size the number of cards in the board
+     * @param ranks the names of the card ranks needed to create the deck
+     * @param suits the names of the card suits needed to create the deck
+     * @param pointValues the integer values of the cards needed to create
+     *                    the deck
      */
-    public ElevensBoard() {
-        cards = new Card[BOARD_SIZE];
-        deck = new Deck(RANKS, SUITS, POINT_VALUES);
+    public Board(int size, String[] ranks, String[] suits, int[] pointValues) {
+        cards = new Card[size];
+        deck = new Deck(ranks, suits, pointValues);
         if (I_AM_DEBUGGING) {
             System.out.println(deck);
             System.out.println("----------");
@@ -174,31 +149,21 @@ public class ElevensBoard {
     }
 
     /**
-     * Determines if the selected cards form a valid group for removal.
-     * In Elevens, the legal groups are (1) a pair of non-face cards
-     * whose values add to 11, and (2) a group of three cards consisting of
-     * a jack, a queen, and a king in some order.
+     * Method to be completed by the concrete class that determines
+     * if the selected cards form a valid group for removal.
      * @param selectedCards the list of the indices of the selected cards.
      * @return true if the selected cards form a valid group for removal;
      *         false otherwise.
      */
-    public boolean isLegal(List<Integer> selectedCards) {
-		boolean legality;
-
-    }
+    public abstract boolean isLegal(List<Integer> selectedCards);
 
     /**
-     * Determine if there are any legal plays left on the board.
-     * In Elevens, there is a legal play if the board contains
-     * (1) a pair of non-face cards whose values add to 11, or (2) a group
-     * of three cards consisting of a jack, a queen, and a king in some order.
+     * Method to be completed by the concrete class that determines
+     * if there are any legal plays left on the board.
      * @return true if there is a legal play left on the board;
      *         false otherwise.
      */
-    public boolean anotherPlayIsPossible() {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-    }
-
+    public abstract boolean anotherPlayIsPossible();
 
     /**
      * Deal cards to this board to start the game.
@@ -208,30 +173,7 @@ public class ElevensBoard {
             cards[k] = deck.deal();
         }
     }
-
-    /**
-     * Check for an 11-pair in the selected cards.
-     * @param selectedCards selects a subset of this board.  It is list
-     *                      of indexes into this board that are searched
-     *                      to find an 11-pair.
-     * @return true if the board entries in selectedCards
-     *              contain an 11-pair; false otherwise.
-     */
-    private boolean containsPairSum11(List<Integer> selectedCards) {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-    }
-
-    /**
-     * Check for a JQK in the selected cards.
-     * @param selectedCards selects a subset of this board.  It is list
-     *                      of indexes into this board that are searched
-     *                      to find a JQK group.
-     * @return true if the board entries in selectedCards
-     *              include a jack, a queen, and a king; false otherwise.
-     */
-    private boolean containsJQK(List<Integer> selectedCards) {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-    }
 }
+
 
 }
