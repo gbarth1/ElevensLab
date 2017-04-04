@@ -4,7 +4,7 @@ import java.util.ArrayList;
 /**
  * Created by gb647 on 3/29/17.
  */
-public class ElevensBoard {
+public class ElevensBoard extends Board{
     /**
      * The size (number of cards) on the board.
      */
@@ -49,13 +49,7 @@ public class ElevensBoard {
      * Creates a new <code>ElevensBoard</code> instance.
      */
     public ElevensBoard() {
-        cards = new Card[BOARD_SIZE];
-        deck = new Deck(RANKS, SUITS, POINT_VALUES);
-        if (I_AM_DEBUGGING) {
-            System.out.println(deck);
-            System.out.println("----------");
-        }
-        dealMyCards();
+        super(BOARD_SIZE, RANKS, SUITS, POINT_VALUES);
     }
 
     /**
@@ -183,7 +177,14 @@ public class ElevensBoard {
      *         false otherwise.
      */
     public boolean isLegal(List<Integer> selectedCards) {
-		boolean legality;
+
+        if (selectedCards.size() == 2) {
+            return containsPairSum11(selectedCards);
+        } else if (selectedCards.size() == 3) {
+            return containsJQK(selectedCards);
+        } else {
+            return false;
+        }
 
     }
 
@@ -196,7 +197,8 @@ public class ElevensBoard {
      *         false otherwise.
      */
     public boolean anotherPlayIsPossible() {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+        List<Integer> cIndexes = cardIndexes();
+        return findPairSum11(cIndexes) || findJQK(cIndexes);
     }
 
 
@@ -217,8 +219,18 @@ public class ElevensBoard {
      * @return true if the board entries in selectedCards
      *              contain an 11-pair; false otherwise.
      */
-    private boolean containsPairSum11(List<Integer> selectedCards) {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+    private List findPairSum11(List<Integer> selectedCards) {
+        ArrayList pairSum11 = new ArrayList();
+        for (int sk1 = 0; sk1 < selectedCards.size(); sk1++) {
+            int k1 = selectedCards.get(sk1).intValue();
+            for (int sk2 = sk1 + 1; sk2 < selectedCards.size(); sk2++) {
+                int k2 = selectedCards.get(sk2).intValue();
+                if (cardAt(k1).pointValue() + cardAt(k2).pointValue() == 11) {
+                    pairSum11.add(sk2);
+                }
+            }
+        }
+        return pairSum11;
     }
 
     /**
@@ -229,9 +241,49 @@ public class ElevensBoard {
      * @return true if the board entries in selectedCards
      *              include a jack, a queen, and a king; false otherwise.
      */
-    private boolean containsJQK(List<Integer> selectedCards) {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+    private List findJQK(List<Integer> selectedCards) {
+        ArrayList fJQK = new ArrayList();
+        String foundJack;
+        String foundQueen;
+        String foundKing;
+        for (Integer kObj : selectedCards) {
+            int k = kObj.intValue();
+            if (cardAt(k).rank().equals("jack") || cardAt(k).rank().equals("queen") || cardAt(k).rank().equals("king")) {
+                fJQK.add(cardAt(k));
+            }
+        }
+        return fJQK;
+    }
+
+    /**
+     * Looks for a legal play on the board.  If one is found, it plays it.
+     * @return true if a legal play was found (and made); false othewise.
+     */
+    public boolean playIfPossible() {
+        return false;
+    }
+
+    /**
+     * Looks for a pair of non-face cards whose values sum to 11.
+     * If found, replace them with the next two cards in the deck.
+     * The simulation of this game uses this method.
+     * @return true if an 11-pair play was found (and made); false othewise.
+     */
+    private boolean playPairSum11IfPossible() {
+		/* *** TO BE IMPLEMENTED IN ACTIVITY 11 *** */
+        return false; // REPLACE !
+    }
+
+    /**
+     * Looks for a group of three face cards JQK.
+     * If found, replace them with the next three cards in the deck.
+     * The simulation of this game uses this method.
+     * @return true if a JQK play was found (and made); false othewise.
+     */
+    private boolean playJQKIfPossible() {
+		/* *** TO BE IMPLEMENTED IN ACTIVITY 11 *** */
+        return false; // REPLACE !
     }
 }
 
-}
+

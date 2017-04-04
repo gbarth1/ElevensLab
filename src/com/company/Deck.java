@@ -36,17 +36,24 @@ public class Deck {
     }
 
     public void shuffle() {
-        for (int i = deck.size() - 1; i > 0; i--) {
-            int red = (int) (Math.random() * (i + 1));
-            Card cool = deck.get(red);
-            deck.set(i, cool);
-            deck.set(red, deck.get(i));
-
+        for (int k = cards.size() - 1; k > 0; k--) {
+            int howMany = k + 1;
+            int start = 0;
+            int randPos = (int) (Math.random() * howMany) + start;
+            Card temp = cards.get(k);
+            cards.set(k, cards.get(randPos));
+            cards.set(randPos, temp);
         }
+        size = cards.size();
     }
 
     public Card deal() {
-		return cards.get(size);
+        if (isEmpty()) {
+            return null;
+        }
+        size--;
+        Card c = cards.get(size);
+        return c;
     }
 
     public String toString() {
